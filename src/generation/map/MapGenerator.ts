@@ -46,10 +46,10 @@ export class MapGenerator {
     boss: 0, // Assigned by floor
   };
 
-  // Configuration
+  // Configuration - simpler map
   private readonly FLOORS = 15;
-  private readonly COLUMNS = 7;
-  private readonly MIN_PATHS = 6;
+  private readonly COLUMNS = 4; // Reduced from 7 for simpler paths
+  private readonly MIN_PATHS = 3; // Reduced from 6
   private readonly MAX_WIDTH_JUMP = 1; // Max columns a path can move
 
   constructor(rng: SeededRNG) {
@@ -213,16 +213,16 @@ export class MapGenerator {
       }
     }
 
-    // Add some cross-connections for more variety (paths can merge)
+    // Add occasional cross-connections (reduced for simpler paths)
     for (let floor = 0; floor < this.FLOORS - 1; floor++) {
       const floorNodes = Array.from(nodes.values()).filter(n => n.floor === floor);
       const nextFloorNodes = Array.from(nodes.values()).filter(n => n.floor === floor + 1);
 
       for (const node of floorNodes) {
         for (const nextNode of nextFloorNodes) {
-          // Can connect to adjacent columns
+          // Can connect to adjacent columns only
           if (Math.abs(node.column - nextNode.column) <= 1) {
-            if (!node.connections.includes(nextNode.id) && this.rng.chance(0.3)) {
+            if (!node.connections.includes(nextNode.id) && this.rng.chance(0.15)) {
               node.connections.push(nextNode.id);
             }
           }
@@ -389,10 +389,10 @@ export class MapGenerator {
    * Convert floor index to screen Y position
    */
   private floorToY(floor: number): number {
-    const mapHeight = 800;
-    const padding = 100;
+    const floorSpacing = 100; // More space between floors
+    const padding = 150;
     // Floor 0 at bottom, higher floors go up
-    return mapHeight + padding - (floor / this.FLOORS) * mapHeight;
+    return padding + (this.FLOORS - floor) * floorSpacing;
   }
 
   /**

@@ -7,6 +7,8 @@ import { CombatScene } from '../ui/combat/CombatScene';
 import { MapScene } from '../ui/map/MapScene';
 import { MainMenuScene } from '../ui/MainMenuScene';
 import { HubScene } from '../ui/hub/HubScene';
+import { RewardsScene } from '../ui/RewardsScene';
+import { GameOverScene } from '../ui/GameOverScene';
 import { LLMClient } from '../llm/client/LLMClient';
 
 export interface Scene {
@@ -42,6 +44,8 @@ export class GameManager {
     this.scenes.set('hub', new HubScene(this));
     this.scenes.set('map', new MapScene(this));
     this.scenes.set('combat', new CombatScene(this));
+    this.scenes.set('rewards', new RewardsScene(this));
+    this.scenes.set('game_over', new GameOverScene(this));
 
     // Initialize all scenes
     for (const scene of this.scenes.values()) {

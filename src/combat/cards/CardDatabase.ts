@@ -834,9 +834,35 @@ addCard({
   keywords: ['unplayable'],
 });
 
+// ============================================
+// PLACEHOLDER CARDS
+// ============================================
+
+addCard({
+  id: 'quick_slash',
+  name: 'Quick Slash',
+  description: 'Deal 3 damage. Draw 1 card.',
+  type: 'attack',
+  rarity: 'common',
+  cost: 1,
+  target: 'enemy',
+  effects: [
+    { type: 'damage', value: 3 },
+    { type: 'draw', value: 1 },
+  ],
+  effectsUpgraded: [
+    { type: 'damage', value: 5 },
+    { type: 'draw', value: 1 },
+  ],
+});
+
 // Export helper functions
 export function getCard(id: string): CardDefinition | undefined {
   return CardDatabase.get(id);
+}
+
+export function getAllCards(): CardDefinition[] {
+  return Array.from(CardDatabase.values());
 }
 
 export function getCardsByRarity(rarity: CardDefinition['rarity']): CardDefinition[] {
