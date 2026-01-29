@@ -1,0 +1,190 @@
+{
+  "events": [
+    {
+      "id": "necronomicon",
+      "title": "The Necronomicon",
+      "description": "A weathered tome lies open on a pedestal. Its pages seem to writhe with an inner darkness.",
+      "act": 1,
+      "weight": 10,
+      "choices": [
+        {
+          "text": "Read the tome",
+          "effects": [{ "type": "add_relic", "value": "necronomicon" }],
+          "consequences": [{ "type": "damage", "value": 10 }]
+        },
+        {
+          "text": "Leave it alone",
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "mysterious_sphere",
+      "title": "Mysterious Sphere",
+      "description": "A perfect sphere of glass hovers before you, containing swirling mists.",
+      "act": 1,
+      "weight": 15,
+      "choices": [
+        {
+          "text": "Reach into the sphere",
+          "effects": [{ "type": "transform_cards", "count": 2 }]
+        },
+        {
+          "text": "Smash it",
+          "effects": [{ "type": "gain_gold", "value": 50 }]
+        },
+        {
+          "text": "Walk away",
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "ancient_writing",
+      "title": "Ancient Writing",
+      "description": "Strange symbols cover the walls. They seem to shift when you're not looking directly at them.",
+      "act": 1,
+      "weight": 12,
+      "choices": [
+        {
+          "text": "Study the symbols carefully",
+          "tagRequired": "SCHOLAR",
+          "effects": [{ "type": "upgrade_card", "count": 1 }]
+        },
+        {
+          "text": "Copy them down",
+          "effects": [{ "type": "add_card", "value": "insight" }]
+        },
+        {
+          "text": "Ignore them",
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "the_cleric",
+      "title": "The Cleric",
+      "description": "A robed figure offers healing in exchange for a donation to their order.",
+      "act": 1,
+      "weight": 20,
+      "choices": [
+        {
+          "text": "Pay 35 gold to heal to full",
+          "costGold": 35,
+          "effects": [{ "type": "heal", "value": "full" }]
+        },
+        {
+          "text": "Pay 50 gold to remove a card",
+          "costGold": 50,
+          "effects": [{ "type": "remove_card", "count": 1 }]
+        },
+        {
+          "text": "Decline",
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "golden_idol",
+      "title": "Golden Idol",
+      "description": "A gleaming idol sits atop a trapped pedestal. The floor around it is suspiciously pressure-sensitive.",
+      "act": 1,
+      "weight": 15,
+      "choices": [
+        {
+          "text": "Take the idol (gain Golden Idol, trigger trap)",
+          "effects": [
+            { "type": "add_relic", "value": "golden_idol" },
+            { "type": "damage", "value": 25 }
+          ]
+        },
+        {
+          "text": "Disarm and take (requires Dexterity)",
+          "tagRequired": "ROGUE",
+          "effects": [{ "type": "add_relic", "value": "golden_idol" }]
+        },
+        {
+          "text": "Leave it",
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "drug_dealer",
+      "title": "Shady Figure",
+      "description": "A cloaked figure beckons from the shadows, offering strange vials.",
+      "act": 2,
+      "weight": 12,
+      "choices": [
+        {
+          "text": "Buy J.A.X. (gain 2 Strength this combat, take 3 damage)",
+          "costGold": 50,
+          "effects": [{ "type": "add_potion", "value": "jax" }]
+        },
+        {
+          "text": "Buy Mutagenic Strength (permanent +1 Str, random curse)",
+          "costGold": 75,
+          "effects": [
+            { "type": "gain_strength_permanent", "value": 1 },
+            { "type": "add_curse_random" }
+          ]
+        },
+        {
+          "text": "Report them (gain gold but they might remember)",
+          "effects": [
+            { "type": "gain_gold", "value": 25 },
+            { "type": "set_flag", "flag": "betrayed_dealer", "value": 1 }
+          ]
+        },
+        {
+          "text": "Walk away",
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "vampires",
+      "title": "Vampires",
+      "description": "Three pale figures block your path. They offer a deal - blood for power.",
+      "act": 2,
+      "weight": 8,
+      "choices": [
+        {
+          "text": "Accept their offer",
+          "effects": [
+            { "type": "lose_max_hp", "value": 10 },
+            { "type": "add_relic", "value": "blood_vial" },
+            { "type": "add_card", "value": "bite" },
+            { "type": "add_card", "value": "bite" },
+            { "type": "add_card", "value": "bite" }
+          ]
+        },
+        {
+          "text": "Refuse and fight",
+          "effects": [{ "type": "start_combat", "enemies": ["vampire", "vampire", "vampire"] }]
+        }
+      ]
+    },
+    {
+      "id": "designer",
+      "title": "The Designer",
+      "description": "A spectral craftsman offers to modify one of your cards.",
+      "act": 2,
+      "weight": 10,
+      "choices": [
+        {
+          "text": "Upgrade a card",
+          "effects": [{ "type": "upgrade_card", "count": 1 }]
+        },
+        {
+          "text": "Transform a card",
+          "effects": [{ "type": "transform_card", "count": 1 }]
+        },
+        {
+          "text": "Remove a card",
+          "effects": [{ "type": "remove_card", "count": 1 }]
+        }
+      ]
+    }
+  ]
+}
