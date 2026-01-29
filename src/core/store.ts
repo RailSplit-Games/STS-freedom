@@ -53,7 +53,6 @@ export interface GameState {
   discardPile: string[];
   exhaustPile: string[];
   relics: string[]; // Relic IDs
-  potions: (string | null)[]; // Potion IDs (3 slots, null = empty)
   flags: Map<string, number>; // QBN flags for narrative
 }
 
@@ -66,9 +65,6 @@ export interface GameActions {
   addCardToDeck: (cardId: string) => void;
   removeCardFromDeck: (cardId: string) => void;
   addRelic: (relicId: string) => void;
-  addPotion: (potionId: string) => boolean; // Returns false if no slots
-  usePotion: (slotIndex: number) => string | null; // Returns potionId if used
-  removePotion: (slotIndex: number) => void;
   addTag: (tag: string) => void;
   setFlag: (key: string, value: number) => void;
   incrementFlag: (key: string, amount?: number) => void;
@@ -111,7 +107,6 @@ export function createGameStore() {
     discardPile: [],
     exhaustPile: [],
     relics: [],
-    potions: [null, null, null],
     flags: new Map(),
 
     // Actions
@@ -139,7 +134,6 @@ export function createGameStore() {
         discardPile: [],
         exhaustPile: [],
         relics: ['burning_blood'],
-        potions: [null, null, null],
         flags: new Map(),
       });
     },
@@ -176,35 +170,6 @@ export function createGameStore() {
     addRelic: (relicId) => set((state) => ({
       relics: [...state.relics, relicId],
     })),
-
-    addPotion: (potionId) => {
-      const state = get();
-      const emptySlot = state.potions.findIndex(p => p === null);
-      if (emptySlot === -1) return false;
-      const newPotions = [...state.potions];
-      newPotions[emptySlot] = potionId;
-      set({ potions: newPotions });
-      return true;
-    },
-
-    usePotion: (slotIndex) => {
-      const state = get();
-      if (slotIndex < 0 || slotIndex >= state.potions.length) return null;
-      const potionId = state.potions[slotIndex];
-      if (!potionId) return null;
-      const newPotions = [...state.potions];
-      newPotions[slotIndex] = null;
-      set({ potions: newPotions });
-      return potionId;
-    },
-
-    removePotion: (slotIndex) => {
-      const state = get();
-      if (slotIndex < 0 || slotIndex >= state.potions.length) return;
-      const newPotions = [...state.potions];
-      newPotions[slotIndex] = null;
-      set({ potions: newPotions });
-    },
 
     addTag: (tag) => set((state) => {
       if (!state.run) return state;

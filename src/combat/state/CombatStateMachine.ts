@@ -632,18 +632,4 @@ export class CombatStateMachine {
   getWorld(): World {
     return this.world;
   }
-
-  /**
-   * Force check for deaths (call after external damage like potions)
-   */
-  forceDeathCheck(): void {
-    this.checkForDeaths();
-  }
-
-  /**
-   * Check if combat has ended
-   */
-  isEnded(): boolean {
-    return this.state.phase === 'victory' || this.state.phase === 'defeat';
-  }
 }
